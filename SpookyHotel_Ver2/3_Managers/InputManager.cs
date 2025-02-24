@@ -22,6 +22,8 @@ class InputManager
     ConsoleKey lastPressedKey;
     public ConsoleKey CurrentPressedKey { get { return lastPressedKey; } }
 
+    // Console.KeyAvailable이 생각보다 자주 true가 되지 않아서, 키가 눌렸을 때 일정하게 true를 리턴해주기 위한 장치 추가
+    bool keyHeld = false;   
     InputManager()
     {
         ResetPressedKey();
@@ -29,15 +31,17 @@ class InputManager
 
     public void Update()
     {
-        if (Console.KeyAvailable)
+        if (Console.KeyAvailable) 
         {
             lastPressedKey = Console.ReadKey(intercept: true).Key;
+            keyHeld = true;
         }
     }
 
     public void FixedUpdate()
     {
-        ResetPressedKey();
+        if (!keyHeld) ResetPressedKey();
+        keyHeld = false;
     }
 
     public void ResetPressedKey()
@@ -52,6 +56,7 @@ class InputManager
     /// <returns>키가 눌렸는가?</returns>
     public bool GetKey(ConsoleKey consoleKey)
     {
+        Debug.Log(lastPressedKey.ToString() + " last pressed");
         return consoleKey == lastPressedKey;
     }
 }
