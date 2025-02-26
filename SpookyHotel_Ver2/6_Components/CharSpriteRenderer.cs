@@ -10,15 +10,20 @@
     {
         base.FixedUpdate();
 
-        // 이 오브젝트의 월드 좌표
-        CharSpriteCoords worldPosition = gameObject.Transform.GetWorldPosition();
+        RenderableScene? rs = SceneManager.Instance.CurrentScene as RenderableScene;
 
-        // 현재 씬의 카메라 좌표 가져오기
-        CharSpriteCoords cameraPosition = SceneManager.Instance.CurrentScene.Camera.Transform.position;
+        if (rs != null)
+        {
+            // 이 오브젝트의 월드 좌표
+            CharSpriteCoords worldPosition = gameObject.Transform.GetWorldPosition();
 
-        // 렌더
-        ConsoleRenderer.Instance.Draw(charSpriteKey, worldPosition - cameraPosition);
+            // 현재 씬의 카메라 좌표 가져오기
+            CharSpriteCoords cameraPosition = rs.Camera.Transform.position;
 
-        //Debug.Log("Draw " + gameObject.Name);
+            // 렌더
+            ConsoleRenderer.Instance.Draw(charSpriteKey, worldPosition - cameraPosition);
+
+            //Debug.Log("Draw " + gameObject.Name);
+        }
     }
 }

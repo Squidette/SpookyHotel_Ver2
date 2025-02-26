@@ -6,10 +6,20 @@
         get { return created; }
     }
 
+    static GameManager instance = null!;
+    public static GameManager Instance
+    {
+        get { return instance; }
+    }
+
     public GameManager()
     {
-        // 유사 싱글톤
+        // 유사 싱글톤 - 얘도 컴포넌트라서 얘만 따로 생성자를 숨길 방법을 못찾았다. 쓰는 사람이 싱글톤처럼 쓰도록..
         created = true;
+        instance = this;
+
+        // 대사 관련
+        talkedToFrontMan = false;
 
         // 게임 관련
         playerLife = 5;
@@ -25,6 +35,11 @@
 
     // 생명
     int playerLife;
+
+    /// <summary>
+    /// 대사 관련
+    /// </summary>
+    public bool talkedToFrontMan;
 
     /// <summary>
     /// 엘리베이터 관련

@@ -19,11 +19,22 @@ class FCTimer
     }
 
     /// <summary>
+    /// 입력한 시간(프레임 수)이 지났는지를 리턴
+    /// </summary>
+    bool past = false;
+    public bool Past
+    {
+        get { return past; }
+    }
+
+    /// <summary>
     /// 몇 번의 FixedUpdate를 기다릴 것인가
     /// </summary>
-    public FCTimer(int frames)
+    public FCTimer(int frames, bool startAsPassed = false)
     {
         count = 0;
+
+        past = startAsPassed;
 
         if (frames < 0) this.frames = 0;
         else this.frames = frames;
@@ -39,11 +50,18 @@ class FCTimer
         {
             count = 0;
             period = true;
+            past = true;
         }
         else
         {
             period = false;
         }
+    }
+
+    public void Reset()
+    {
+        count = 0;
+        past = false;
     }
 
     public static void FixedUpdate()
@@ -57,8 +75,10 @@ class FCTimer
     /// <summary>
     /// 더 이상 쓰지 않는 타이머는 해제하기
     /// </summary>
-    public static void ReleaseMyTimer(FCTimer timer)
+    public static void ReleaseTimer(FCTimer timer)
     {
+        if (timer == null) return;
+
         if (myTimers.Contains(timer))
         {
             myTimers.Remove(timer);

@@ -20,13 +20,26 @@ class KrTextPrinter
 
     string? waitingText = null;
 
+    List<string> dialogues;
+
+    KrTextPrinter()
+    {
+        dialogues = new List<string>();
+        dialogues.Clear();
+
+        /*0*/ dialogues.Add("어서오게.\n원래 이 호텔은 귀신이 있는\n으스스한 곳이어야 하는데,\n개발자의 시간부족으로 귀신이\n없는 평범한 호텔이 되어\n버렸다네. 아쉽구먼.. ▶▶");
+        /*1*/ dialogues.Add("아, 그리고 최근 44호에서\n불미스러운 일이 있었다네.\n지금 경찰이 조사 중이니\n그 방은 들어가지 말고\n나머지 방만 부탁하네.\n\n쨌든, 2층부터 7층까지\n청소해주고 끝나는대로\n일찍 가게나.");
+        /*2*/ dialogues.Add("치울 필요 없는 물건은\n만지지 말게.\n부정탄다네.. 껄껄");
+    }
+
     /// <summary>
     /// 씬에서 텍스트 출력을 위해 부르는 함수
     /// </summary>
     /// <param name="text"></param>
-    public void PrintText(string text)
+    public void PrintText(int dialogueIndex)
     {
-        waitingText = text;
+        waitingText = dialogues[dialogueIndex];
+        Debug.Log(dialogueIndex.ToString() + " is waiting");
     }
 
     /// <summary>

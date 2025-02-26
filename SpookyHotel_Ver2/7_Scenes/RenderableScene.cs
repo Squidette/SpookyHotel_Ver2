@@ -1,7 +1,7 @@
 ﻿/// <summary>
-/// 렌더 가능한 일반 씬
+/// 렌더 가능한 일반적인 씬 (한글 출력용 대화용 씬은 DialogueScene을 써야 함)
 /// </summary>
-class RenderableScene : Scene
+abstract class RenderableScene : Scene
 {
     protected GameObject camera;
     public GameObject Camera

@@ -32,21 +32,23 @@
     /// <summary>
     /// 컴포넌트 추가
     /// </summary>
-    public void AddComponent<T>()
+    public T AddComponent<T>()
         where T : Component, new()
     {
         // 이 함수로 추가 불가능한 컴포넌트
-        if (typeof(T) == typeof(Component)) return;
-        if (typeof(T) == typeof(Transform)) return;
+        if (typeof(T) == typeof(Component)) return null;
+        if (typeof(T) == typeof(Transform)) return null;
 
         // 이 함수로 추가는 가능하지만 다수 생성은 불가능한 컴포넌트
-        if (typeof(T) == typeof(CharSpriteRenderer) && AlreadyHasComponent<CharSpriteRenderer>()) return;
+        if (typeof(T) == typeof(CharSpriteRenderer) && AlreadyHasComponent<CharSpriteRenderer>()) return null;
 
         // 컴포넌트 추가
         T newComponent = new T();
         newComponent.GameObject = this;
         newComponent.Start();
         components.Add(newComponent);
+
+        return newComponent;
     }
 
     /// <summary>

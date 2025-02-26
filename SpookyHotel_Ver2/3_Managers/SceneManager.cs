@@ -18,11 +18,11 @@ class SceneManager
     }
 
     // 현재 씬
-    RenderableScene currentScene = null!;
-    public RenderableScene CurrentScene { get { return currentScene; } }
+    Scene currentScene = null!;
+    public Scene CurrentScene { get { return currentScene; } }
 
     // 다음으로 로드할 씬
-    RenderableScene? nextScene = null;
+    Scene? nextScene = null;
 
     // 항상 함께 돌아가고있는, DontDestroyOnLoad씬
     Scene dontDestroyOnLoadScene;
@@ -44,7 +44,7 @@ class SceneManager
     /// </summary>
     /// <param name="move">씬을 바꿀 것인지(false인 경우 로드만 한다)</param>
     public void LoadScene<T>()
-        where T : RenderableScene, new()
+        where T : Scene, new()
     {
         // 이미 전환이 예약된 씬이 있다면 리턴
         if (nextScene != null) return;
@@ -66,15 +66,15 @@ class SceneManager
         currentScene?.FixedUpdate();
         dontDestroyOnLoadScene.FixedUpdate();
 
-        // debug
-        if (InputManager.Instance.GetKey(ConsoleKey.N))
-        {
-            Debug.Log(DontDestroyOnLoadScene.ShowGameObjects());
-        }
-        if (InputManager.Instance.GetKey(ConsoleKey.M))
-        {
-            Debug.Log(currentScene!.ShowGameObjects());
-        }
+        //// debug
+        //if (InputManager.Instance.GetKey(ConsoleKey.N))
+        //{
+        //    Debug.Log(DontDestroyOnLoadScene.ShowGameObjects());
+        //}
+        //if (InputManager.Instance.GetKey(ConsoleKey.M))
+        //{
+        //    Debug.Log(currentScene!.ShowGameObjects());
+        //}
     }
 
     public void DontDestroyOnLoad(GameObject go)

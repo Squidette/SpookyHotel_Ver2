@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-class ElevatorInside : RenderableScene
+﻿class ElevatorInside : RenderableScene
 {
     public override void Start()
     {
@@ -16,7 +14,7 @@ class ElevatorInside : RenderableScene
         // 플레이어 위치, 리밋 재설정
         GameObject player = SceneManager.Instance.DontDestroyOnLoadScene.Find("Player")!;
         player.Transform.position = new CharSpriteCoords(6, 15);
-        player.GetComponent<Player>().MaxRow = 27;
+        player.GetComponent<PlayerMovement>().MaxRow = 27;
 
         // 사운드
         if (!SoundManager.Instance.ResumeTrack("LobbyMusic"))
