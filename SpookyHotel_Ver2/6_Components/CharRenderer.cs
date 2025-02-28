@@ -1,10 +1,6 @@
-﻿class CharSpriteRenderer : Component
+﻿class CharRenderer : Component
 {
-    string charSpriteKey = string.Empty;
-    public string CharSpriteKey
-    {
-        set { charSpriteKey = value; }
-    }
+    public char character = ' ';
 
     protected override void FixedUpdateActions()
     {
@@ -21,9 +17,7 @@
             CharSpriteCoords cameraPosition = rs.Camera.Transform.position;
 
             // 렌더
-            ConsoleRenderer.Instance.Draw(charSpriteKey, worldPosition - cameraPosition);
-
-            //Debug.Log("Draw " + gameObject.Name);
+            ConsoleRenderer.Instance.Draw(character, worldPosition - cameraPosition);
         }
     }
 }

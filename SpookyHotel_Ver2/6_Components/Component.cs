@@ -7,15 +7,20 @@
         set { gameObject = value; }
     }
 
+    public bool enabled = true;
+
     public virtual void Start()
     {
          
     }
 
-    public virtual void FixedUpdate()
+    public void FixedUpdate()
     {
-
+        if (!enabled) return;
+        FixedUpdateActions();
     }
+
+    protected virtual void FixedUpdateActions() { }
 
     public virtual void OnDestroy()
     {

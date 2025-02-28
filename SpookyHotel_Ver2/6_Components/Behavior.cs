@@ -8,9 +8,9 @@ class Behavior : Component
         base.Start();
     }
 
-    public override void FixedUpdate()
+    protected override void FixedUpdateActions()
     {
-        base.FixedUpdate();
+        base.FixedUpdateActions();
     }
 
     public override void OnDestroy()
