@@ -29,6 +29,9 @@
     /// 플레이어 관련
     /// </summary>
 
+    // 플레이어 현재 층
+    public int playerCurrentFloor;
+
     // 생명
     //int playerLife;
 
@@ -47,6 +50,8 @@
         base.Start();
 
         SceneManager.Instance.DontDestroyOnLoad(gameObject);
+
+        playerCurrentFloor = 1;
     }
 
     protected override void FixedUpdate()

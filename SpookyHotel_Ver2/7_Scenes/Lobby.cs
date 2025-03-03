@@ -1,7 +1,5 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-/// <summary>
-/// 첫 번째 씬
+﻿/// <summary>
+/// 첫 번째 씬으로, 1층 로비씬
 /// </summary>
 class Lobby : RenderableScene
 {
@@ -13,11 +11,11 @@ class Lobby : RenderableScene
     {
         base.Start();
 
-        // 배경음악
-        if (!SoundManager.Instance.ResumeTrack("LobbyMusic"))
-        {
-            SoundManager.Instance.PlayTrack("Ill Wind.mp3", "LobbyMusic");
-        }
+        //// 배경음악
+        //if (!SoundManager.Instance.ResumeTrack("LobbyMusic"))
+        //{
+        //    SoundManager.Instance.PlayTrack("Ill Wind.mp3", "LobbyMusic");
+        //}
 
         // 리소스 로드
         ConsoleRenderer.Instance.LoadSprite("lobbyBase", new CharSpriteSize(10, 85), new CharSpriteCoords(), "lobby1085.txt", false);
@@ -54,8 +52,8 @@ class Lobby : RenderableScene
             AddGameObject(elevatorOpenDoor);
             CharSpriteRenderer csr = elevatorOpenDoor.AddComponent<CharSpriteRenderer>();
             csr.CharSpriteKey = "openDoor";
-            csr.enabled = Elevator.Instance.Stopped;
-            elevatorOpenDoor.AddComponent<ElevatorDoorOpen>().doorOpenSprite = csr;
+            csr.enabled = Elevator.Instance.DoorOpen && Elevator.Instance.CurrentFloor == 1;
+            elevatorOpenDoor.AddComponent<ElevatorDoorOpen_Hallways>().doorOpenSprite = csr;
         }
 
         /// 엘리베이터 층수 표시
@@ -124,8 +122,8 @@ class Lobby : RenderableScene
 
     public override void Exit()
     {
-        // 배경음악
-        SoundManager.Instance.PauseTrack("LobbyMusic");
+        //// 배경음악
+        //SoundManager.Instance.PauseTrack("LobbyMusic");
 
         // 플레이어의 로비 전용 스크립트 제거
         if (player != null)

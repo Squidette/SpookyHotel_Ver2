@@ -4,21 +4,21 @@
 
     public override void Start()
     {
-        Elevator.Instance.RaiseStoppedEvent += OnStoppedStateChanged;
+        Elevator.Instance.RaiseDoorEvent += OnStoppedStateChanged;
         base.Start();
     }
 
     public override void OnDestroy()
     {
-        Elevator.Instance.RaiseStoppedEvent -= OnStoppedStateChanged;
+        Elevator.Instance.RaiseDoorEvent -= OnStoppedStateChanged;
         base.OnDestroy();
     }
 
-    void OnStoppedStateChanged(object? sender, Elevator.ElevatorStoppedEventArgs e)
+    protected virtual void OnStoppedStateChanged(object? sender, Elevator.ElevatorDoorOpenEventArgs e)
     {
         if (doorOpenSprite != null)
         {
-            doorOpenSprite.enabled = e.stopped;
+            doorOpenSprite.enabled = e.open;
         }
     }
 }

@@ -8,11 +8,11 @@
     {
         base.Start();
 
-        // 배경음악
-        if (!SoundManager.Instance.ResumeTrack("ElevMusic"))
-        {
-            SoundManager.Instance.PlayTrack("In Limbo.mp3", "ElevMusic");
-        }
+        //// 배경음악
+        //if (!SoundManager.Instance.ResumeTrack("ElevMusic"))
+        //{
+        //    SoundManager.Instance.PlayTrack("In Limbo.mp3", "ElevMusic");
+        //}
 
         // 리소스 로드
         ConsoleRenderer.Instance.LoadSprite("elevatorBase", new CharSpriteSize(10, 30), new CharSpriteCoords(), "elevatorBase.txt", false);
@@ -28,7 +28,7 @@
         AddGameObject(openDoor);
         CharSpriteRenderer csr = openDoor.AddComponent<CharSpriteRenderer>();
         csr.CharSpriteKey = "openDoor";
-        csr.enabled = Elevator.Instance.Stopped;
+        csr.enabled = Elevator.Instance.DoorOpen;
         openDoor.AddComponent<ElevatorDoorOpen>().doorOpenSprite = csr;
 
         /// 눌린 버튼 표시
@@ -59,7 +59,7 @@
         cr.character = '-';
         dirDisplay.AddComponent<HallwayDirDisplay>().charRenderer = cr; // 하는게 똑같으니까 복도걸 돌려쓰자
 
-        // 플레이어 위치, 리밋 재설정
+        /// 플레이어 위치, 리밋 재설정
         player = SceneManager.Instance.DontDestroyOnLoadScene.Find("Player")!;
 
         if (player != null)
@@ -81,20 +81,15 @@
         //player.GetComponent<Player>().MaxRow = 27;
     }
 
-    public override void FixedUpdate()
-    {
-        if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
-        {
-            SceneManager.Instance.LoadScene<Lobby>();
-        }
-
-        base.FixedUpdate();
-    }
+    //public override void FixedUpdate()
+    //{
+    //    base.FixedUpdate();
+    //}
 
     public override void Exit()
     {
-        // 배경음악
-        SoundManager.Instance.PauseTrack("ElevMusic");
+        //// 배경음악
+        //SoundManager.Instance.PauseTrack("ElevMusic");
 
         // 플레이어의 로비 전용 스크립트 제거
         if (player != null)

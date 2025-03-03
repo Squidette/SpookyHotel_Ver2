@@ -1,4 +1,6 @@
-﻿/// <summary>
+﻿using FMOD;
+
+/// <summary>
 /// 텍스트를 콘솔창에 출력해주는 클래스
 /// </summary>
 class ConsoleRenderer
@@ -221,6 +223,15 @@ class CharSprite
             {
                 buffer[i, j] = ' ';
             }
+        }
+    }
+
+    // 로드된 스프라이트 변경
+    public void EditBuffer(CharSpriteCoords coordToEdit, char newChar)
+    {
+        if (CharSpriteUtility.CoordsWithinBuffer(coordToEdit, buffer))
+        {
+            buffer[coordToEdit.col, coordToEdit.row] = newChar;
         }
     }
 

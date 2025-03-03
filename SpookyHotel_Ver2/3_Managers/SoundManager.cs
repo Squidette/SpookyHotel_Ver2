@@ -32,7 +32,8 @@ class SoundManager
     // (배경음악용) 재생되는 트랙 관리
     Dictionary<string, Track> managedTracks;
 
-    static float fadeSpeed = 0.015F;
+    // 페이드 속도: 클수록 빨리 페이드됨
+    static float fadeSpeed = 0.02F;
 
     SoundManager()
     {

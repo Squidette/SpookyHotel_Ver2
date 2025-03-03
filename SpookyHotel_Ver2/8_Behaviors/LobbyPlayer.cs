@@ -1,10 +1,10 @@
 ﻿// 로비에서의 플레이어 행동
 class LobbyPlayer : Behavior
 {
-    public override void Start()
-    {
-        base.Start();
-    }
+    //public override void Start()
+    //{
+    //    base.Start();
+    //}
 
     protected override void FixedUpdate()
     {
@@ -38,7 +38,7 @@ class LobbyPlayer : Behavior
             if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
             {
                 // 엘리베이터가 멈춰 있고, 현재 층이면 엘리베이터 입장
-                if (Elevator.Instance.Stopped && Elevator.Instance.CurrentFloor == 1)
+                if (Elevator.Instance.DoorOpen && Elevator.Instance.CurrentFloor == 1)
                 {
                     SceneManager.Instance.LoadScene<ElevatorInside>();
                 }
@@ -46,13 +46,14 @@ class LobbyPlayer : Behavior
                 else
                 {
                     Elevator.Instance.PressButton(1);
+                    Elevator.Instance.DoorReserve = Elevator.DoorReserveState.WAITING_TO_OPEN;
                 }
             }
         }
     }
 
-    public override void OnDestroy()
-    {
-        base.OnDestroy();
-    }
+    //public override void OnDestroy()
+    //{
+    //    base.OnDestroy();
+    //}
 }

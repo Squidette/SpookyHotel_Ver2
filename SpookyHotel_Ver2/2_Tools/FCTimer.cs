@@ -1,6 +1,8 @@
 ﻿/// <summary>
 /// FCTimer = FixedUpdate Counts Timer
 /// 몇 번의 FixedUpdate가 지나갔는지 카운트하는 타이머
+/// Period로 입력한 시간의 주기가 지나는지 산발적으로 확인할 수도 있고,
+/// Past로 타이머를 생성한 후로 입력한 시간이 지났는지 상태를 확인할 수도 있음
 /// </summary>
 class FCTimer
 {

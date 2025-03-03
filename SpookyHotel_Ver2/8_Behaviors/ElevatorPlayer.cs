@@ -39,5 +39,33 @@
                 elevator.PressButton(7);
             }
         }
+
+        // 엘리베이터 문이 열려 있고, 플레이어가 문 앞에 서 있으며, 사용자가 스페이스를 눌렀을 때 로비나 복도로 나가기
+        if (Elevator.Instance != null && Elevator.Instance.DoorOpen)
+        {
+            if (gameObject.Transform.position.row >= 10 && gameObject.Transform.position.row <= 18)
+            {
+                if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
+                {
+                    // 1층은 로비
+                    if (Elevator.Instance.CurrentFloor == 1)
+                    {
+                        SceneManager.Instance.LoadScene<Lobby>();
+                    }
+                    // 2~7층은 일반홀
+                    else if (2 <= Elevator.Instance.CurrentFloor && Elevator.Instance.CurrentFloor <= 7)
+                    {
+                        SceneManager.Instance.LoadScene<Hallways>();
+                    }
+                }
+            }
+        }
+        else if (Elevator.Instance != null && !Elevator.Instance.DoorOpen && Elevator.Instance.Direction == null) // 문이 닫혀 있다면 열기
+        {
+            if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
+            {
+                Elevator.Instance.DoorReserve = Elevator.DoorReserveState.WAITING_TO_OPEN;
+            }
+        }
     }
 }
