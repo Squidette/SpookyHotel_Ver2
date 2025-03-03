@@ -2,9 +2,9 @@
 {
     public char character = ' ';
 
-    protected override void FixedUpdateActions()
+    protected override void FixedUpdate()
     {
-        base.FixedUpdateActions();
+        base.FixedUpdate();
 
         RenderableScene? rs = SceneManager.Instance.CurrentScene as RenderableScene;
 

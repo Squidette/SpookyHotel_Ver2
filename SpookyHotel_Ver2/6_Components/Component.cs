@@ -14,13 +14,13 @@
          
     }
 
-    public void FixedUpdate()
+    public void RunFixedUpdate()
     {
         if (!enabled) return;
-        FixedUpdateActions();
+        FixedUpdate();
     }
 
-    protected virtual void FixedUpdateActions() { }
+    protected virtual void FixedUpdate() { }
 
     public virtual void OnDestroy()
     {

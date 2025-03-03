@@ -67,14 +67,14 @@ class SceneManager
         dontDestroyOnLoadScene.FixedUpdate();
 
         //// debug
-        //if (InputManager.Instance.GetKey(ConsoleKey.N))
-        //{
-        //    Debug.Log(DontDestroyOnLoadScene.ShowGameObjects());
-        //}
-        //if (InputManager.Instance.GetKey(ConsoleKey.M))
-        //{
-        //    Debug.Log(currentScene!.ShowGameObjects());
-        //}
+        if (InputManager.Instance.GetKey(ConsoleKey.N))
+        {
+            Debug.Log(DontDestroyOnLoadScene.ShowGameObjects());
+        }
+        if (InputManager.Instance.GetKey(ConsoleKey.M))
+        {
+            Debug.Log(currentScene!.ShowGameObjects());
+        }
     }
 
     public void DontDestroyOnLoad(GameObject go)

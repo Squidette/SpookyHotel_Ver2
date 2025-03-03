@@ -7,7 +7,7 @@
     public enum RenderMode
     {
         CONSOLERENDERER,    // 영문자 + 특수문자로 콘솔에 그림 그리기
-        KRTEXTPRINTER       // 한글 텍스트 출력하기
+        KRTEXTPRINTER       // 텍스트 출력하기 (한글가능)
     }
 
     static void Main()

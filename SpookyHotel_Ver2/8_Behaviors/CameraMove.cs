@@ -20,7 +20,7 @@
         base.Start();
     }
 
-    public override void FixedUpdate()
+    protected override void FixedUpdate()
     {
         base.FixedUpdate();
 

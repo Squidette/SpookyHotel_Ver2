@@ -22,11 +22,7 @@
         talkedToFrontMan = false;
 
         // 게임 관련
-        playerLife = 5;
-
-        seventhFloorUnlocked = false;
-        currentFloor = 1;
-        direction = null;
+        //playerLife = 5;
     }
 
     /// <summary>
@@ -34,79 +30,17 @@
     /// </summary>
 
     // 생명
-    int playerLife;
+    //int playerLife;
 
     /// <summary>
     /// 대사 관련
     /// </summary>
+    
+    // 프론트맨에게 말을 걸었는지 여부
     public bool talkedToFrontMan;
 
-    /// <summary>
-    /// 엘리베이터 관련
-    /// </summary>
-    
-    // 최대 층 관련
-    bool seventhFloorUnlocked;
-    public bool SeventhFloorUnlocked
-    {
-        get { return seventhFloorUnlocked; }
-        set { seventhFloorUnlocked = value; }
-    }
-    public int GetMaxFloor()
-    {
-        return seventhFloorUnlocked ? 7 : 6;
-    }
-
-    // 현재 층
-    int currentFloor;
-    public int CurrentFloor
-    {
-        get
-        {
-            return currentFloor;
-        }
-        set
-        {
-            currentFloor = value;
-        }
-    }
-
-    // 진행 방향    // null: 멈춤, true: 위, false: 아래
-    bool? direction; 
-    public bool? Direction
-    {
-        get
-        {
-            return direction;
-        }
-        set
-        {
-            direction = value;
-        }
-    }
-
-    // 엘리베이터 눌린 버튼
-    HashSet<int> CurrentPressedFloors = new HashSet<int>();
-    public void AddToCurrentPressedFloors(int floor)
-    {
-        if (0 < floor && floor <= GetMaxFloor())
-        {
-            CurrentPressedFloors.Add(floor);
-        }
-    }
-    void RemoveFromCurrentPressedFloors(int floor)
-    {
-        CurrentPressedFloors.Remove(floor);
-    }
-
-    // 버튼 누르기
-    public void PressElevatorButton(int floor)
-    {
-        if (0 < floor && floor <= GetMaxFloor())
-        {
-
-        }
-    }
+    // 로비 포지션
+    public int lobbyPosition;
 
     public override void Start()
     {
@@ -115,7 +49,7 @@
         SceneManager.Instance.DontDestroyOnLoad(gameObject);
     }
 
-    public override void FixedUpdate()
+    protected override void FixedUpdate()
     {
         base.FixedUpdate();
     }

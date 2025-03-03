@@ -26,19 +26,29 @@ class InputManager
     bool keyHeld = false;
 
     // TimedGetKey 시간재기용
-    FCTimer timer;
+    FCTimer timedKeysTimer;
 
-    //
-    List<ConsoleKey> timedKeys;
+    // 연속 감지 막을 키들 (클릭용)
+    List<ConsoleKey> timedKeys = null!;
     
     InputManager()
     {
         ResetPressedKey();
 
         timedKeys = new List<ConsoleKey>();
-        timedKeys.Add(ConsoleKey.Spacebar);
+        if (timedKeys != null)
+        {
+            timedKeys.Add(ConsoleKey.Spacebar);
+            timedKeys.Add(ConsoleKey.D1);
+            timedKeys.Add(ConsoleKey.D2);
+            timedKeys.Add(ConsoleKey.D3);
+            timedKeys.Add(ConsoleKey.D4);
+            timedKeys.Add(ConsoleKey.D5);
+            timedKeys.Add(ConsoleKey.D6);
+            timedKeys.Add(ConsoleKey.D7);
+        }
 
-        timer = new FCTimer(10, true);
+        timedKeysTimer = new FCTimer(4, true);
     }
 
     public void Update()
@@ -71,7 +81,7 @@ class InputManager
         if (consoleKey == ConsoleKey.None) return false;
 
         bool pressed = consoleKey == lastPressedKey;
-        if (pressed && timedKeys.Contains(consoleKey)) timer.Reset();
+        if (pressed && timedKeys.Contains(consoleKey)) timedKeysTimer.Reset();
 
         return pressed;
     }
@@ -84,6 +94,6 @@ class InputManager
     /// <returns></returns>
     public bool GetKey_Timed(ConsoleKey consoleKey)
     {
-        return timer.Past ? GetKey(consoleKey) : false;
+        return timedKeysTimer.Past ? GetKey(consoleKey) : false;
     }
 }

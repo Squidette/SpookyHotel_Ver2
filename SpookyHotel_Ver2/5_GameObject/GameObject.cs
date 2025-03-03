@@ -36,11 +36,11 @@
         where T : Component, new()
     {
         // 이 함수로 추가 불가능한 컴포넌트
-        if (typeof(T) == typeof(Component)) return null;
-        if (typeof(T) == typeof(Transform)) return null;
+        if (typeof(T) == typeof(Component)) return null!;
+        if (typeof(T) == typeof(Transform)) return null!;
 
         // 이 함수로 추가는 가능하지만 다수 생성은 불가능한 컴포넌트
-        if (typeof(T) == typeof(CharSpriteRenderer) && AlreadyHasComponent<CharSpriteRenderer>()) return null;
+        if (typeof(T) == typeof(CharSpriteRenderer) && AlreadyHasComponent<CharSpriteRenderer>()) return null!;
 
         // 컴포넌트 추가
         T newComponent = new T();
@@ -96,7 +96,7 @@
     {
         foreach (Component component in components)
         {
-            component.FixedUpdate();
+            component.RunFixedUpdate();
         }
     }
 

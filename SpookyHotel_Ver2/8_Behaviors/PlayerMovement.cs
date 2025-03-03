@@ -1,19 +1,12 @@
 ﻿class PlayerMovement : Behavior
 {
-    static bool created = false;
-    public static bool Created
-    {
-        get { return created; }
-    }
+    CharSpriteRenderer spriteRenderer = null!;
 
     // 최대/최소 움직임 좌표 (리밋)
     int minRow;
     public int MinRow { set { minRow = value; } }
     int maxRow;
     public int MaxRow { set { maxRow = value; } }
-
-    // 플레이어 조작 가능
-    public bool canMove;
 
     // 걷기 애니메이션
     int animationSpeed = 3;     // 이 숫자의 fixedUpdate 주기마다 애니메이션을 바꾸게된다
@@ -38,35 +31,26 @@
             }
         }
     }
-    CharSpriteRenderer spriteRenderer = null!;
-
-    public PlayerMovement()
-    {
-        created = true;
-    }
 
     public override void Start()
     {
         base.Start();
 
-        SceneManager.Instance.DontDestroyOnLoad(gameObject);
-
         spriteRenderer = gameObject.GetComponent<CharSpriteRenderer>();
-
         lastAnimChangePosition = gameObject.Transform.position.row;
-
-        canMove = true;
     }
 
-    public override void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
+
         // 이동키 받음
-        if (InputManager.Instance.GetKey(ConsoleKey.A) && gameObject.Transform.position.row > minRow && canMove)
+        if (InputManager.Instance.GetKey(ConsoleKey.A) && gameObject.Transform.position.row > minRow)
         {
             gameObject.Transform.position.row = gameObject.Transform.position.row - 1;
             staticCombo = 0;
         }
-        else if (InputManager.Instance.GetKey(ConsoleKey.D) && gameObject.Transform.position.row < maxRow && canMove)
+        else if (InputManager.Instance.GetKey(ConsoleKey.D) && gameObject.Transform.position.row < maxRow)
         {
             gameObject.Transform.position.row = gameObject.Transform.position.row + 1;
             staticCombo = 0;
@@ -83,14 +67,6 @@
             WalkingAnimation = !walkingAnimation;
             lastAnimChangePosition = gameObject.Transform.position.row;
         }
-
-        // debug
-        if (InputManager.Instance.GetKey(ConsoleKey.I))
-        {
-            Debug.Log("Player Position: " + gameObject.Transform.position.ToString());
-        }
-
-        base.FixedUpdate();
     }
 
     public override void OnDestroy()
@@ -98,4 +74,3 @@
         base.OnDestroy();
     }
 }
-

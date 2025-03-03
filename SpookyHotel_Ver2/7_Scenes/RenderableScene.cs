@@ -1,5 +1,6 @@
 ﻿/// <summary>
 /// 렌더 가능한 일반적인 씬 (한글 출력용 대화용 씬은 DialogueScene을 써야 함)
+/// 기본으로 카메라 오브젝트를 가지고 있음
 /// </summary>
 abstract class RenderableScene : Scene
 {

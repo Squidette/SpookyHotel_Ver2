@@ -1,18 +1,12 @@
 ﻿// 로비에서의 플레이어 행동
 class LobbyPlayer : Behavior
 {
-    public LobbyPlayer()
-        : base()
-    {
-
-    }
-
     public override void Start()
     {
         base.Start();
     }
 
-    public override void FixedUpdate()
+    protected override void FixedUpdate()
     {
         base.FixedUpdate();
 
@@ -34,6 +28,24 @@ class LobbyPlayer : Behavior
                 if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
                 {
                     SceneManager.Instance.LoadScene<HotelFrontManComments>();
+                }
+            }
+        }
+
+        // 엘리베이터 입장하기
+        if (gameObject.Transform.position.row >= 66 && gameObject.Transform.position.row <= 74)
+        {
+            if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
+            {
+                // 엘리베이터가 멈춰 있고, 현재 층이면 엘리베이터 입장
+                if (Elevator.Instance.Stopped && Elevator.Instance.CurrentFloor == 1)
+                {
+                    SceneManager.Instance.LoadScene<ElevatorInside>();
+                }
+                // 아니면 현재 층으로 엘리베이터 호출
+                else
+                {
+                    Elevator.Instance.PressButton(1);
                 }
             }
         }

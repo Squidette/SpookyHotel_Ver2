@@ -84,6 +84,16 @@ class ConsoleRenderer
         }
     }
 
+    public void Draw(char character, CharSpriteCoords coords)
+    {
+        if (CharSpriteUtility.CoordsWithinBuffer(coords, canvasBuffer))
+        {
+            canvasBuffer[coords.col, coords.row] = character;
+
+            bufferChange = true;
+        }
+    }
+
     public void LoadSprite(string spriteKey, CharSpriteSize size, CharSpriteCoords center, string? fileName = null, bool transparent = true)
     {
         if (!loadedCharSprites.ContainsKey(spriteKey))
