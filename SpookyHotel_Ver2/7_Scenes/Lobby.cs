@@ -56,6 +56,16 @@ class Lobby : RenderableScene
             elevatorOpenDoor.AddComponent<ElevatorDoorOpen_Hallways>().doorOpenSprite = csr;
         }
 
+        /// 현재층 엘리베이터 예약 표시
+        {
+            GameObject selected = new GameObject("Selected", new CharSpriteCoords(2, 70));
+            AddGameObject(selected);
+            CharSpriteRenderer csr = selected.AddComponent<CharSpriteRenderer>();
+            csr.CharSpriteKey = "buttonSelector";
+            csr.enabled = Elevator.Instance.GetButton(GameManager.Instance.playerCurrentFloor);
+            selected.AddComponent<HallwaysPressedButtonsDisplay>();
+        }
+
         /// 엘리베이터 층수 표시
         {
             GameObject floorDisplay = new GameObject("FloorDisplay", new CharSpriteCoords(2, 70));

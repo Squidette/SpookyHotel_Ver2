@@ -18,7 +18,10 @@
                 else
                 {
                     Elevator.Instance.PressButton(GameManager.Instance.playerCurrentFloor);
-                    Elevator.Instance.DoorReserve = Elevator.DoorReserveState.WAITING_TO_OPEN;
+                    if (Elevator.Instance.Stopped)
+                    {
+                        Elevator.Instance.DoorReserve = Elevator.DoorReserveState.WAITING_TO_OPEN;
+                    }
                 }
             }
         }

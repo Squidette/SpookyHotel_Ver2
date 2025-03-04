@@ -1,4 +1,8 @@
-﻿class Elevator : Behavior
+﻿/// <summary>
+/// 항시 돌아가는 엘리베이터 클래스
+/// </summary>
+
+class Elevator : Behavior
 {
     /// 유사 싱글톤
     static bool created = false;
