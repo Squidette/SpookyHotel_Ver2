@@ -88,12 +88,12 @@ class Lobby : RenderableScene
         // 씬이 처음이면 생성
         if (!Player.Created)
         {
-            player = new GameObject("Player", new CharSpriteCoords(5, 16));
+            player = new GameObject("Player", new CharSpriteCoords(5, 68)); // 원래 16
             AddGameObject(player);
             player.AddComponent<CharSpriteRenderer>();
             player.AddComponent<Player>();  // 여기에 DontDestroyOnLoadScene으로 보내는 스크립트가 있다
         }
-        else // 플레이어가 위층에서 내려오는 경우
+        else // 씬이 처음이 아닌 경우
         {
             // 아니면 DontDestroyOnLoadScene에 들어가있는 플레이어 찾기
             player = SceneManager.Instance.DontDestroyOnLoadScene.Find("Player")!;
@@ -128,6 +128,33 @@ class Lobby : RenderableScene
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        //// debug
+        //if (InputManager.Instance.GetKey_Timed(ConsoleKey.D2))
+        //{
+        //    GameManager.Instance.playerCurrentFloor = 2;
+        //    SceneManager.Instance.LoadScene<Hallways>();
+        //}
+        //if (InputManager.Instance.GetKey_Timed(ConsoleKey.D3))
+        //{
+        //    GameManager.Instance.playerCurrentFloor = 3;
+        //    SceneManager.Instance.LoadScene<Hallways>();
+        //}
+        //if (InputManager.Instance.GetKey_Timed(ConsoleKey.D4))
+        //{
+        //    GameManager.Instance.playerCurrentFloor = 4;
+        //    SceneManager.Instance.LoadScene<Hallways>();
+        //}
+        //if (InputManager.Instance.GetKey_Timed(ConsoleKey.D5))
+        //{
+        //    GameManager.Instance.playerCurrentFloor = 5;
+        //    SceneManager.Instance.LoadScene<Hallways>();
+        //}
+        //if (InputManager.Instance.GetKey_Timed(ConsoleKey.D6))
+        //{
+        //    GameManager.Instance.playerCurrentFloor = 6;
+        //    SceneManager.Instance.LoadScene<Hallways>();
+        //}
     }
 
     public override void Exit()

@@ -40,7 +40,17 @@ class LobbyPlayer : Behavior
                 // 엘리베이터가 멈춰 있고, 현재 층이면 엘리베이터 입장
                 if (Elevator.Instance.DoorOpen && Elevator.Instance.CurrentFloor == 1)
                 {
-                    SceneManager.Instance.LoadScene<ElevatorInside>();
+                    //// 처음 입장이 아니라면 그냥 입장
+                    //if (GameManager.Instance.calledElevator)
+                    //{
+                        SceneManager.Instance.LoadScene<ElevatorInside>();
+                    //}
+                    //// 처음 입장이라면 튜토리얼부터 켜기
+                    //else
+                    //{
+                    //    SceneManager.Instance.LoadScene<ElevatorTutorial>();
+                    //    GameManager.Instance.calledElevator = true;
+                    //}
                 }
                 // 아니면 현재 층으로 엘리베이터 호출
                 else

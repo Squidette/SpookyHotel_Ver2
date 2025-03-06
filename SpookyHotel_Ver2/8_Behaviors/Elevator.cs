@@ -36,10 +36,10 @@ class Elevator : Behavior
         {
             if (value != null) moveTimer.Reset();
 
-            // debug
-            if (value == null) { Debug.Log("direction set null"); }
-            else if (value == true) { Debug.Log("direction set true"); }
-            else if (value == false) { Debug.Log("direction set false"); }
+            //// debug
+            //if (value == null) { Debug.Log("direction set null"); }
+            //else if (value == true) { Debug.Log("direction set true"); }
+            //else if (value == false) { Debug.Log("direction set false"); }
 
             direction = value;
         }
@@ -58,7 +58,7 @@ class Elevator : Behavior
                 if (!stopped) moveTimer?.Reset();
 
                 // debug
-                Debug.Log(stopped ? "Stopped" : "Moving");
+                //Debug.Log(stopped ? "Stopped" : "Moving");
             }
         }
     }
@@ -78,7 +78,7 @@ class Elevator : Behavior
                 waitTimer.Reset();
 
                 // debug
-                Debug.Log(doorOpen ? "DOOR OPEN" : "DOOR CLOSED");
+                //Debug.Log(doorOpen ? "DOOR OPEN" : "DOOR CLOSED");
             }
         }
     }
@@ -96,19 +96,19 @@ class Elevator : Behavior
                 if (value != DoorReserveState.NONE) doorTimer.Reset();
                 doorReserveState = value;
 
-                // debug
-                switch (value)
-                {
-                    case DoorReserveState.NONE:
-                        Debug.Log("DoorReserveState Set To None");
-                        break;
-                    case DoorReserveState.WAITING_TO_OPEN:
-                        Debug.Log("DoorReserveState Set To Waiting To Open");
-                        break;
-                    case DoorReserveState.WAITING_TO_CLOSE:
-                        Debug.Log("DoorReserveState Set To Waiting To Close");
-                        break;
-                }
+                //// debug
+                //switch (value)
+                //{
+                //    case DoorReserveState.NONE:
+                //        Debug.Log("DoorReserveState Set To None");
+                //        break;
+                //    case DoorReserveState.WAITING_TO_OPEN:
+                //        Debug.Log("DoorReserveState Set To Waiting To Open");
+                //        break;
+                //    case DoorReserveState.WAITING_TO_CLOSE:
+                //        Debug.Log("DoorReserveState Set To Waiting To Close");
+                //        break;
+                //}
             }
         }
     }
@@ -122,7 +122,7 @@ class Elevator : Behavior
     public event EventHandler<ElevatorDoorOpenEventArgs>? RaiseDoorEvent;
 
     // 다음 층으로 가기까지 걸릴 시간
-    const int moveSpeed = 70;
+    const int moveSpeed = 7; //70
     FCTimer moveTimer;
 
     // 멈춰 있지 않을 때 한 층에서 머무를 시간
@@ -130,7 +130,7 @@ class Elevator : Behavior
     FCTimer waitTimer;
 
     // 문이 여닫히는데 걸리는 시간
-    const int doorSpeed = 30;
+    const int doorSpeed = 3; //30
     FCTimer doorTimer;
 
     // 눌린 버튼: true면 눌림, false면 꺼짐
@@ -166,7 +166,7 @@ class Elevator : Behavior
             if (pressedButtons[i])
             {
                 hasButtonOver = true;
-                Debug.Log("something pressed over " + floor);
+                //Debug.Log("something pressed over " + floor);
                 break;
             }
         }
@@ -184,7 +184,7 @@ class Elevator : Behavior
             if (pressedButtons[i])
             {
                 hasButtonUnder = true;
-                Debug.Log("something pressed under " + floor);
+                //Debug.Log("something pressed under " + floor);
                 break;
             }
         }

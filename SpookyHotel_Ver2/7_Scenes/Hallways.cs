@@ -16,13 +16,14 @@
 
         // 리소스 로드
         ConsoleRenderer.Instance.LoadSprite("hallBase", new CharSpriteSize(10, 120), new CharSpriteCoords(), "halls.txt", false);
+        ConsoleRenderer.Instance.LoadSprite("roomsLeftToClean", new CharSpriteSize(1, 14), new CharSpriteCoords(0, 7), "roomsLeftToCleanUI114.txt", false);
 
         // 층수에 맞게 리소스 변경
         CharSprite? nullable = ConsoleRenderer.Instance.GetSprite("hallBase");
         if (nullable != null)
         {
             // 문에 층별 호수 쓰기
-            char currentFloor = (char)('0' + Elevator.Instance.CurrentFloor);
+            char currentFloor = (char)('0' + GameManager.Instance.playerCurrentFloor);
             nullable.SetCharByCoords(new CharSpriteCoords(2, 10), currentFloor);
             nullable.SetCharByCoords(new CharSpriteCoords(2, 26), currentFloor);
             nullable.SetCharByCoords(new CharSpriteCoords(2, 42), currentFloor);
@@ -30,9 +31,6 @@
             nullable.SetCharByCoords(new CharSpriteCoords(2, 93), currentFloor);
             nullable.SetCharByCoords(new CharSpriteCoords(2, 109), currentFloor);
         }
-
-        // 게임매니저의 플레이어 현재 층 재설정
-        GameManager.Instance.playerCurrentFloor = Elevator.Instance.CurrentFloor;
 
         /// 배경
         GameObject background = new GameObject("Background");
@@ -45,7 +43,7 @@
 
         if (player != null)
         {
-            player.Transform.position = new CharSpriteCoords(5, 58);
+            player.Transform.position = new CharSpriteCoords(5, GameManager.Instance.hallwaysPosition);
 
             // 서있는 포즈로 바꿔주기
             player.GetComponent<CharSpriteRenderer>().CharSpriteKey = "player2";
@@ -108,12 +106,24 @@
             cr.character = '-';
             elevatorDirDisplay.AddComponent<HallwayDirDisplay>().charRenderer = cr;
         }
-    }
 
-    //public override void FixedUpdate()
-    //{
-    //    base.FixedUpdate();
-    //}
+        /// 남은 방 UI
+        {
+            GameObject ui = new GameObject("RoomsLeftToClean", new CharSpriteCoords(8, 23));
+            AddGameObject(ui);
+            CharSpriteRenderer cr = ui.AddComponent<CharSpriteRenderer>();
+            cr.CharSpriteKey = "roomsLeftToClean";
+            cr.enabled = GameManager.Instance.EnteredRoom;
+            ui.AddComponent<RoomsLeftToCleanUI>().renderer = cr;
+            ui.ParentObject = Find("Camera");
+        }
+
+        // 치워야하는 방 수 업데이트
+        if (GameManager.Instance.EnteredRoom)
+        {
+            GameManager.Instance.CountUpCleanRooms();
+        }
+    }
 
     public override void Exit()
     {
@@ -124,6 +134,8 @@
         {
             player.DestroyComponent(playerHallwaysScript);
             player.DestroyComponent(playerMovementScript);
+
+            GameManager.Instance.hallwaysPosition = player.Transform.position.row;
         }
 
         base.Exit();

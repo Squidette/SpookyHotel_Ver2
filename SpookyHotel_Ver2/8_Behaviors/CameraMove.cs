@@ -3,6 +3,8 @@
     // 따라다닐 게임오브젝트
     public GameObject? target;
 
+    public bool limitLess = false;
+
     // 리밋
     public int minRow;
     public int maxRow;
@@ -29,8 +31,11 @@
         {
             gameObject.Transform.position = target.Transform.position + offset;
 
-            if (gameObject.Transform.position.row < minRow) gameObject.Transform.position.row = minRow;
-            if (gameObject.Transform.position.row > maxRow) gameObject.Transform.position.row = maxRow;
+            if (!limitLess)
+            {
+                if (gameObject.Transform.position.row < minRow) gameObject.Transform.position.row = minRow;
+                if (gameObject.Transform.position.row > maxRow) gameObject.Transform.position.row = maxRow;
+            }
         }
 
         //if (InputManager.Instance.GetKey(ConsoleKey.P))

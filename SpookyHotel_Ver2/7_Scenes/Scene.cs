@@ -59,6 +59,15 @@
             }
         }
 
+        // DontDestroyOnLoad 씬에서도 찾는다
+        foreach (GameObject gameObject in SceneManager.Instance.DontDestroyOnLoadScene.gameObjects)
+        {
+            if (gameObject.Name == name)
+            {
+                return gameObject;
+            }
+        }
+
         return null;
     }
 

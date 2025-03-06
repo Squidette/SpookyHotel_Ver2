@@ -52,10 +52,15 @@
                     {
                         SceneManager.Instance.LoadScene<Lobby>();
                     }
-                    // 2~7층은 일반홀
-                    else if (2 <= Elevator.Instance.CurrentFloor && Elevator.Instance.CurrentFloor <= 7)
+                    // 2~6층은 일반홀
+                    else if (2 <= Elevator.Instance.CurrentFloor && Elevator.Instance.CurrentFloor <= 6)
                     {
                         SceneManager.Instance.LoadScene<Hallways>();
+                    }
+                    // 7층은 귀신들린층
+                    else if (Elevator.Instance.CurrentFloor == 7)
+                    {
+                        SceneManager.Instance.LoadScene<HauntedHallways>();
                     }
                 }
             }

@@ -2,6 +2,13 @@
 {
     CharSpriteRenderer spriteRenderer = null!;
 
+    // 좌우 움직임에 최대/최소 리밋이 있는지
+    bool limitLess = false;
+    public bool LimitLess
+    {
+        set => limitLess = value;
+    }
+
     // 최대/최소 움직임 좌표 (리밋)
     int minRow;
     public int MinRow { set { minRow = value; } }
@@ -45,15 +52,21 @@
         base.FixedUpdate();
 
         // 이동키 받음
-        if (InputManager.Instance.GetKey(ConsoleKey.A) && gameObject.Transform.position.row > minRow)
+        if (InputManager.Instance.GetKey(ConsoleKey.A))
         {
-            gameObject.Transform.position.row = gameObject.Transform.position.row - 1;
-            staticCombo = 0;
+            if (limitLess || gameObject.Transform.position.row > minRow)
+            {
+                gameObject.Transform.position.row = gameObject.Transform.position.row - 1;
+                staticCombo = 0;
+            }
         }
-        else if (InputManager.Instance.GetKey(ConsoleKey.D) && gameObject.Transform.position.row < maxRow)
+        else if (InputManager.Instance.GetKey(ConsoleKey.D))
         {
-            gameObject.Transform.position.row = gameObject.Transform.position.row + 1;
-            staticCombo = 0;
+            if (limitLess || gameObject.Transform.position.row < maxRow)
+            {
+                gameObject.Transform.position.row = gameObject.Transform.position.row + 1;
+                staticCombo = 0;
+            }
         }
         else //서있었던 시간이 animationSpeed보다 커질 때 서 있는 모션으로 바꿔 준다
         {

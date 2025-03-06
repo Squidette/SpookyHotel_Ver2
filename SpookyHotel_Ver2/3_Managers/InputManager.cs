@@ -46,6 +46,9 @@ class InputManager
             timedKeys.Add(ConsoleKey.D5);
             timedKeys.Add(ConsoleKey.D6);
             timedKeys.Add(ConsoleKey.D7);
+            timedKeys.Add(ConsoleKey.UpArrow);
+            timedKeys.Add(ConsoleKey.LeftArrow);
+            timedKeys.Add(ConsoleKey.RightArrow);
         }
 
         timedKeysTimer = new FCTimer(4, true);

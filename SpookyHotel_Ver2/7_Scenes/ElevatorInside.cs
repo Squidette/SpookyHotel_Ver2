@@ -98,6 +98,9 @@
             player.DestroyComponent(playerElevatorScript);
         }
 
+        // 게임매니저의 플레이어 현재 층 재설정
+        GameManager.Instance.playerCurrentFloor = Elevator.Instance.CurrentFloor;
+
         base.Exit();
     }
 }

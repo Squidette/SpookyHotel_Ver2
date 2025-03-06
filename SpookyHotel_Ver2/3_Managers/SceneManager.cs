@@ -37,6 +37,7 @@ class SceneManager
 
         // 로비로 시작
         LoadScene<Lobby>();
+        //LoadScene<FirstTutorial>();
     }
 
     /// <summary>
@@ -47,7 +48,11 @@ class SceneManager
         where T : Scene, new()
     {
         // 이미 전환이 예약된 씬이 있다면 리턴
-        if (nextScene != null) return;
+        if (nextScene != null)
+        {
+            //Debug.Log("이미 전환 예약된 씬이 있어서 로드씬 취소");
+            return;
+        }
 
         // 씬 바꾸기 예약 (흐름 제어를 위해 실제 바꾸는건 다음 FixeUpdate에서 모아서 한다)
         nextScene = new T();
@@ -75,6 +80,10 @@ class SceneManager
         {
             Debug.Log(currentScene!.ShowGameObjects());
         }
+        if (InputManager.Instance.GetKey(ConsoleKey.B))
+        {
+            Debug.Log(currentScene!.GetType().ToString());
+        }
     }
 
     public void DontDestroyOnLoad(GameObject go)
@@ -84,6 +93,7 @@ class SceneManager
         {
             if (currentScene.RemoveGameObject(go))
             {
+                // 이거 고쳐야 한다 해당 최상위 부모 오브젝트의 모든 자식들까지 재귀적으로 다 딸려가는게 맞지않나?
                 go.ParentObject = null;
                 dontDestroyOnLoadScene.AddGameObject(go);
             }

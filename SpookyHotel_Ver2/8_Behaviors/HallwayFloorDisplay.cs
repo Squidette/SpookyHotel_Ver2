@@ -8,7 +8,14 @@
 
         if (charRenderer != null)
         {
-            charRenderer.character = (char)('0' + Elevator.Instance.CurrentFloor);
+            if (Elevator.Instance.CurrentFloor == 1)
+            {
+                charRenderer.character = 'L';
+            }
+            else
+            {
+                charRenderer.character = (char)('0' + Elevator.Instance.CurrentFloor);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FMOD;
+using System;
 
 /// <summary>
 /// 텍스트를 콘솔창에 출력해주는 클래스
@@ -39,13 +40,10 @@ class ConsoleRenderer
         Console.CursorVisible = false;
 
         // test - 초기화
-        for (int i = 0; i < canvasBuffer.GetLength(0); i++)
+        ArrayUtils.Iterate(canvasBuffer, (i, j) =>
         {
-            for (int j = 0; j < canvasBuffer.GetLength(1); j++)
-            {
-                canvasBuffer[i, j] = 'x';
-            }
-        }
+            canvasBuffer[i, j] = 'x';
+        });
     }
 
     ~ConsoleRenderer()
@@ -217,22 +215,10 @@ class CharSprite
 
     void DrawBlankBuffer()
     {
-        for (int i = 0; i < buffer.GetLength(0); i++)
+        ArrayUtils.Iterate(buffer, (i, j) =>
         {
-            for (int j = 0; j < buffer.GetLength(1); j++)
-            {
-                buffer[i, j] = ' ';
-            }
-        }
-    }
-
-    // 로드된 스프라이트 변경
-    public void EditBuffer(CharSpriteCoords coordToEdit, char newChar)
-    {
-        if (CharSpriteUtility.CoordsWithinBuffer(coordToEdit, buffer))
-        {
-            buffer[coordToEdit.col, coordToEdit.row] = newChar;
-        }
+            buffer[i, j] = ' ';
+        });
     }
 
     public char? GetCharByCoords(CharSpriteCoords coords)
@@ -246,6 +232,7 @@ class CharSprite
         else return null;
     }
 
+    // 로드된 스프라이트 변경
     public void SetCharByCoords(CharSpriteCoords coords, char newChar)
     {
         if (CharSpriteUtility.CoordsWithinBuffer(coords, buffer))
@@ -260,6 +247,7 @@ public static class CharSpriteUtility
     /// <summary>
     /// 버퍼 크기 내의 좌표인가?
     /// </summary>
+    // I want a generalized version of this, too.
     public static bool CoordsWithinBuffer(CharSpriteCoords coords, char[,] buffer)
     {
         bool within = true;
