@@ -74,9 +74,9 @@ class HauntedHallways : RenderableScene
 
         /// 엘리베이터 방향 표시
         {
-            GameObject elevatorDirDisplay = new GameObject("DirDisplay", new CharSpriteCoords(4, 86)); //66
+            GameObject elevatorDirDisplay = new GameObject("DirDisplay", new CharSpriteCoords(4, 66));
             AddGameObject(elevatorDirDisplay);
-            elevatorDirDisplay.AddComponent<CharRenderer>().character = 'X';
+            elevatorDirDisplay.AddComponent<CharRenderer>().character = '-';
         }
 
         /// 끝없는 복도표현

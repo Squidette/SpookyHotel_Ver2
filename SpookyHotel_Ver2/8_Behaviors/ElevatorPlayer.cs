@@ -41,7 +41,11 @@
                 if (pressed)
                 {
                     SoundManager.Instance.PauseTrack("ElevMusic");
-                    SoundManager.Instance.PlayTrack("intelligentsia.mp3", "DeathMusic");
+
+                    if (!SoundManager.Instance.ResumeTrack("DeathMusic"))
+                    {
+                        SoundManager.Instance.PlayTrack("intelligentsia.mp3", "DeathMusic");
+                    }
                 }
             }
         }
