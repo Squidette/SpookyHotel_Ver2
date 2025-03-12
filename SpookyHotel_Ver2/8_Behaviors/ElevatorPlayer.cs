@@ -36,7 +36,13 @@
             }
             else if (im.GetKey_Timed(ConsoleKey.D7))
             {
-                elevator.PressButton(7);
+                bool pressed = elevator.PressButton(7);
+
+                if (pressed)
+                {
+                    SoundManager.Instance.PauseTrack("ElevMusic");
+                    SoundManager.Instance.PlayTrack("intelligentsia.mp3", "DeathMusic");
+                }
             }
         }
 

@@ -13,6 +13,11 @@
 
     void OnRoomsLeftChanged(object? sender, EventArgs e)
     {
+        UpdateNumber();
+    }
+
+    public void UpdateNumber()
+    {
         if (roomsLeftToCleanCharSprite != null)
         {
             string str = GameManager.Instance.RoomsLeftToClean.ToString().PadLeft(2, ' ');

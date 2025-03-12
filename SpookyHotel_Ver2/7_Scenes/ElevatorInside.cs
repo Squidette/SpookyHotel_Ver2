@@ -8,15 +8,16 @@
     {
         base.Start();
 
-        //// 배경음악
-        //if (!SoundManager.Instance.ResumeTrack("ElevMusic"))
-        //{
-        //    SoundManager.Instance.PlayTrack("In Limbo.mp3", "ElevMusic");
-        //}
+        // 배경음악
+        if (!SoundManager.Instance.ResumeTrack("ElevMusic"))
+        {
+            SoundManager.Instance.PlayTrack("space_tunnel.mp3", "ElevMusic");
+        }
 
         // 리소스 로드
         ConsoleRenderer.Instance.LoadSprite("elevatorBase", new CharSpriteSize(10, 30), new CharSpriteCoords(), "elevatorBase.txt", false);
         ConsoleRenderer.Instance.LoadSprite("buttonSelector", new CharSpriteSize(1, 3), new CharSpriteCoords(0, 1), "buttonSelector.txt", true);
+        ConsoleRenderer.Instance.LoadSprite("7F_Hider", new CharSpriteSize(1, 3), new CharSpriteCoords(0, 1), "seventhfloorcover13.txt", false);
 
         /// 배경
         GameObject background = new GameObject("Background", new CharSpriteCoords());
@@ -24,12 +25,14 @@
         background.AddComponent<CharSpriteRenderer>().CharSpriteKey = "elevatorBase";
 
         /// 문열림
-        GameObject openDoor = new GameObject("OpenDoor", new CharSpriteCoords(4, 14));
-        AddGameObject(openDoor);
-        CharSpriteRenderer csr = openDoor.AddComponent<CharSpriteRenderer>();
-        csr.CharSpriteKey = "openDoor";
-        csr.enabled = Elevator.Instance.DoorOpen;
-        openDoor.AddComponent<ElevatorDoorOpen>().doorOpenSprite = csr;
+        {
+            GameObject openDoor = new GameObject("OpenDoor", new CharSpriteCoords(4, 14));
+            AddGameObject(openDoor);
+            CharSpriteRenderer csr = openDoor.AddComponent<CharSpriteRenderer>();
+            csr.CharSpriteKey = "openDoor";
+            csr.enabled = Elevator.Instance.DoorOpen;
+            openDoor.AddComponent<ElevatorDoorOpen>().doorOpenSprite = csr;
+        }
 
         /// 눌린 버튼 표시
         GameObject[] selectedButtons = new GameObject[7];
@@ -44,6 +47,14 @@
             {
                 selectedButtons[0].AddComponent<ElevatorPressedButtonsDisplay>().pressedButtonDisplayers = selectedButtons;
             }
+        }
+
+        /// 7층가리개
+        if (Elevator.Instance.SeventhFloorHidden)
+        {
+            GameObject hider = new GameObject("7FloorHider", new CharSpriteCoords(2, 27));
+            AddGameObject(hider);
+            hider.AddComponent<CharSpriteRenderer>().CharSpriteKey = "7F_Hider";
         }
 
         /// 현재 층 표시
@@ -81,15 +92,11 @@
         //player.GetComponent<Player>().MaxRow = 27;
     }
 
-    //public override void FixedUpdate()
-    //{
-    //    base.FixedUpdate();
-    //}
-
     public override void Exit()
     {
-        //// 배경음악
-        //SoundManager.Instance.PauseTrack("ElevMusic");
+        // 배경음악
+        SoundManager.Instance.PauseTrack("ElevMusic");
+        SoundManager.Instance.PauseTrack("DeathMusic");
 
         // 플레이어의 로비 전용 스크립트 제거
         if (player != null)

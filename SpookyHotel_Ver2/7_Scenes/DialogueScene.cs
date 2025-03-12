@@ -194,3 +194,89 @@ class LunaticDialogue2 : DialogueScene
         SceneManager.Instance.LoadScene<HauntedRoom>();
     }
 }
+
+class Ending1 : DialogueScene
+{
+    public Ending1() : base()
+    {
+        dialogueIndices.Enqueue(16);
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        SpookyHotel_Ver2.gameRunning = false;
+    }
+
+    protected override void LoadNextScene() { }
+}
+
+class Ending2 : DialogueScene
+{
+    public Ending2() : base()
+    {
+        dialogueIndices.Enqueue(17);
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        SpookyHotel_Ver2.gameRunning = false;
+    }
+
+    protected override void LoadNextScene() { }
+}
+
+class Ending3 : DialogueScene
+{
+    public Ending3() : base()
+    {
+        dialogueIndices.Enqueue(18);
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        SpookyHotel_Ver2.gameRunning = false;
+    }
+
+    protected override void LoadNextScene() { }
+}
+
+class HotelFrontManFinal : DialogueScene
+{
+    public HotelFrontManFinal() : base()
+    {
+        // 일을 끝낸 후 처음 말을 건넴
+        if (!GameManager.Instance.talkedToFrontMan_taskComplete)
+        {
+            dialogueIndices.Enqueue(GameManager.Instance.talkedToFrontMan ? 19 : 20);
+            GameManager.Instance.talkedToFrontMan_taskComplete = true;
+        }
+        else // 두 번 이상 말을 걸었을 때
+        {
+            dialogueIndices.Enqueue(21);
+        }
+    }
+
+    protected override void LoadNextScene()
+    {
+        SceneManager.Instance.LoadScene<Lobby>();
+    }
+}
+
+class CleanDone : DialogueScene
+{
+    public static bool shown = false;
+
+    public CleanDone() : base()
+    {
+        dialogueIndices.Enqueue(22);
+        shown = true;
+    }
+
+    protected override void LoadNextScene()
+    {
+        SceneManager.Instance.LoadScene<Hallways>();
+    }
+}

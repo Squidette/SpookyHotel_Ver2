@@ -23,6 +23,7 @@ class GameManager : Behavior
 
         // 진행 관련
         talkedToFrontMan = false;
+        talkedToFrontMan_taskComplete = false;
         calledElevator = false;
         lunaticDialogueStage = 0;
 
@@ -63,7 +64,11 @@ class GameManager : Behavior
                 if (value)
                 {
                     if (bedClean) Instance.ReducePlayerLife();
-                    else Instance.BedCleanEvent?.Invoke(this, new EventArgs());
+                    else
+                    {
+                        Instance.BedCleanEvent?.Invoke(this, new EventArgs());
+                        SoundManager.Instance.PlaySnippet("bed_cut.mp3");
+                    }
                 }
                 bedClean = value;
             }
@@ -77,7 +82,11 @@ class GameManager : Behavior
                 if (value)
                 {
                     if (plantClean) Instance.ReducePlayerLife();
-                    else Instance.PlantCleanEvent?.Invoke(this, new EventArgs());
+                    else
+                    {
+                        Instance.PlantCleanEvent?.Invoke(this, new EventArgs());
+                        SoundManager.Instance.PlaySnippet("plant_cut.mp3");
+                    }
                 }
                 plantClean = value;
             }
@@ -91,7 +100,11 @@ class GameManager : Behavior
                 if (value)
                 {
                     if (windowClean) Instance.ReducePlayerLife();
-                    else Instance.WindowCleanEvent?.Invoke(this, new EventArgs());
+                    else
+                    {
+                        Instance.WindowCleanEvent?.Invoke(this, new EventArgs());
+                        SoundManager.Instance.PlaySnippet("window_cut.mp3");
+                    }
                 }
                 windowClean = value;
             }
@@ -154,10 +167,7 @@ class GameManager : Behavior
         playerLife--;
 
         if (playerLife <= 4 && playerLife >= 1) SceneManager.Instance.LoadScene<LifeMonologue>();
-        else if (playerLife <= 0)
-        {
-            Debug.Log("죽었습니다");
-        }
+        else if (playerLife <= 0) SceneManager.Instance.LoadScene<Ending3>();
     }
 
     // 치울 방 개수
@@ -179,6 +189,9 @@ class GameManager : Behavior
 
     // 프론트맨에게 말을 걸었는지 여부
     public bool talkedToFrontMan;
+
+    // 청소를 다 한 후 프론트맨에게 말을 걸었는지 여부
+    public bool talkedToFrontMan_taskComplete;
 
     // 미친놈의 대사 진행도
     public int lunaticDialogueStage;
@@ -234,6 +247,18 @@ class GameManager : Behavior
 
         // 404호는 일반 룸 취급하지 않으므로 전부 Clean으로 만들어주고 무시한다
         roomInfo[2, 3].SetAllClean();
+
+        //// debug, test
+        //for (int i=0; i<5; i++)
+        //{
+        //    if (i != 2)
+        //    {
+        //        for (int j = 0; j < 6; j++)
+        //        {
+        //            roomInfo[i, j].SetAllClean();
+        //        }
+        //    }
+        //}
     }
 
     public void CountUpCleanRooms()

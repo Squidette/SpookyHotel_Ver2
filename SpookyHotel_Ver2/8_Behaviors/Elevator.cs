@@ -36,12 +36,14 @@ class Elevator : Behavior
         {
             if (value != null) moveTimer.Reset();
 
+            if (direction != value)
+            {
+                direction = value;
+            }
             //// debug
             //if (value == null) { Debug.Log("direction set null"); }
             //else if (value == true) { Debug.Log("direction set true"); }
             //else if (value == false) { Debug.Log("direction set false"); }
-
-            direction = value;
         }
     }
 
@@ -55,8 +57,10 @@ class Elevator : Behavior
             if (value != stopped)
             {
                 stopped = value;
-                if (!stopped) moveTimer?.Reset();
-
+                if (!stopped)
+                {
+                    moveTimer?.Reset();
+                }
                 // debug
                 //Debug.Log(stopped ? "Stopped" : "Moving");
             }
@@ -83,6 +87,20 @@ class Elevator : Behavior
         }
     }
 
+    // 7층이 숨겨져 있는지
+    bool seventhFloorHidden;
+    public bool SeventhFloorHidden
+    {
+        get => seventhFloorHidden;
+        set
+        {
+            if (value != seventhFloorHidden)
+            {
+                seventhFloorHidden = value;
+            }
+        }
+    }
+
     // 문열기 예약 상태 (doorTimer에 설정된 시간만큼 문이 여닫히는 시간이 걸린다는 설정)
     public enum DoorReserveState { NONE, WAITING_TO_OPEN, WAITING_TO_CLOSE }
 
@@ -93,36 +111,41 @@ class Elevator : Behavior
         {
             if (doorReserveState != value)
             {
-                if (value != DoorReserveState.NONE) doorTimer.Reset();
                 doorReserveState = value;
 
-                //// debug
-                //switch (value)
-                //{
-                //    case DoorReserveState.NONE:
-                //        Debug.Log("DoorReserveState Set To None");
-                //        break;
-                //    case DoorReserveState.WAITING_TO_OPEN:
-                //        Debug.Log("DoorReserveState Set To Waiting To Open");
-                //        break;
-                //    case DoorReserveState.WAITING_TO_CLOSE:
-                //        Debug.Log("DoorReserveState Set To Waiting To Close");
-                //        break;
-                //}
+                // debug
+                switch (doorReserveState)
+                {
+                    case DoorReserveState.NONE:
+                        doorTimer.Reset();
+                        //Debug.Log("DoorReserveState Set To None");
+                        break;
+                    case DoorReserveState.WAITING_TO_OPEN:
+                        //SoundManager.Instance.PlaySnippet("voice_opendoor.mp3");
+                        RaiseDoorReservedEvent?.Invoke(this, new ElevatorDoorOpenEventArgs(true));
+                        //Debug.Log("DoorReserveState Set To Waiting To Open");
+                        break;
+                    case DoorReserveState.WAITING_TO_CLOSE:
+                        //SoundManager.Instance.PlaySnippet("voice_closedoor.mp3");
+                        RaiseDoorReservedEvent?.Invoke(this, new ElevatorDoorOpenEventArgs(false));
+                        //Debug.Log("DoorReserveState Set To Waiting To Close");
+                        break;
+                }
             }
         }
     }
 
-    // stopped 이벤트 발송
+    // 문 관련 이벤트 발송
     public class ElevatorDoorOpenEventArgs : EventArgs
     {
         public bool open;
         public ElevatorDoorOpenEventArgs(bool open) => this.open = open;
     }
     public event EventHandler<ElevatorDoorOpenEventArgs>? RaiseDoorEvent;
+    public event EventHandler<ElevatorDoorOpenEventArgs>? RaiseDoorReservedEvent;
 
     // 다음 층으로 가기까지 걸릴 시간
-    const int moveSpeed = 7; //70
+    const int moveSpeed = 70; //70
     FCTimer moveTimer;
 
     // 멈춰 있지 않을 때 한 층에서 머무를 시간
@@ -130,7 +153,7 @@ class Elevator : Behavior
     FCTimer waitTimer;
 
     // 문이 여닫히는데 걸리는 시간
-    const int doorSpeed = 3; //30
+    const int doorSpeed = 30; //30
     FCTimer doorTimer;
 
     // 눌린 버튼: true면 눌림, false면 꺼짐
@@ -212,11 +235,12 @@ class Elevator : Behavior
 
         // 엘리베이터 관련
         currentFloor = 1;
-        pressedButtons = new bool[7] { false, false, false, false, false, false, false };
+        pressedButtons = [false, false, false, false, false, false, false];
         direction = null;
         stopped = true;
         doorOpen = false;
         doorReserveState = DoorReserveState.NONE;
+        seventhFloorHidden = true;
 
         moveTimer = new FCTimer(moveSpeed);
         waitTimer = new FCTimer(waitSpeed);
@@ -228,13 +252,14 @@ class Elevator : Behavior
     {
         if (inputFloor < 1 || inputFloor > 7) return false;
         if (currentFloor == inputFloor && direction == null) return false;
+        if (inputFloor == 7 && seventhFloorHidden) return false;
 
         if (!SetButton(inputFloor)) return false;
 
         if (direction == null)
         {
             Direction = currentFloor < inputFloor ? true : false;
-            DoorReserve = DoorReserveState.WAITING_TO_CLOSE;
+            if (doorOpen) { DoorReserve = DoorReserveState.WAITING_TO_CLOSE; }
         }
         return true;
     }

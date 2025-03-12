@@ -91,6 +91,9 @@
     /// <summary>이 씬을 나갈때마다 한 번 실행</summary>
     public virtual void Exit()
     {
-
+        foreach (GameObject gameObject in gameObjects)
+        {
+            gameObject.DestroyAllComponents();
+        }
     }
 }

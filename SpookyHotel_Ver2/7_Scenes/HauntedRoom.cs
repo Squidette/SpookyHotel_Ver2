@@ -61,8 +61,12 @@ class HauntedRoom : RenderableScene
 
     public override void Exit()
     {
-        // 나가는 순간 어디선가 엘리베이터 내부의 7증 버튼이 자동으로 눌린다
-        if (Elevator.Instance != null) Elevator.Instance.PressButton(7);
+        // 나가는 순간 7층이 해금?되며 어디선가 엘리베이터 내부의 7증 버튼이 자동으로 눌린다
+        if (Elevator.Instance != null)
+        {
+            Elevator.Instance.SeventhFloorHidden = false;
+            Elevator.Instance.PressButton(7);
+        }
 
         base.Exit();
     }

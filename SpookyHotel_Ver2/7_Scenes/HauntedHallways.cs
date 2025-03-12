@@ -11,14 +11,13 @@ class HauntedHallways : RenderableScene
     {
         base.Start();
 
+        if (!SoundManager.Instance.ResumeTrack("DeathMusic"))
+        {
+            SoundManager.Instance.PlayTrack("intelligentsia.mp3", "DeathMusic");
+        }
+
         ConsoleRenderer.Instance.LoadSprite("hallBase", new CharSpriteSize(10, 120), new CharSpriteCoords(), "halls.txt", false);
         ConsoleRenderer.Instance.LoadSprite("loop", new CharSpriteSize(10, 16), new CharSpriteCoords(), "looping7thdoor1016.txt", false);
-
-        //// 사운드
-        //if (!SoundManager.Instance.ResumeTrack("HallwaysMusic"))
-        //{
-        //    SoundManager.Instance.PlayTrack("Cemetry Gates.mp3", "HallwaysMusic");
-        //}
 
         // 귀신들린 층은 호수 777로 통일하자
         CharSprite? nullable = ConsoleRenderer.Instance.GetSprite("hallBase");
@@ -103,8 +102,6 @@ class HauntedHallways : RenderableScene
 
     public override void Exit()
     {
-        //SoundManager.Instance.PauseTrack("HallwaysMusic");
-
         // 플레이어의 복도 전용 스크립트 제거
         if (player != null)
         {

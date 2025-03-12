@@ -11,11 +11,11 @@ class Lobby : RenderableScene
     {
         base.Start();
 
-        //// 배경음악
-        //if (!SoundManager.Instance.ResumeTrack("LobbyMusic"))
-        //{
-        //    SoundManager.Instance.PlayTrack("Ill Wind.mp3", "LobbyMusic");
-        //}
+        // 배경음악
+        if (!SoundManager.Instance.ResumeTrack("To Ponder"))
+        {
+            SoundManager.Instance.PlayTrack("to_ponder.mp3", "To Ponder");
+        }
 
         // 리소스 로드
         ConsoleRenderer.Instance.LoadSprite("lobbyBase", new CharSpriteSize(10, 85), new CharSpriteCoords(), "lobby1085.txt", false);
@@ -88,7 +88,7 @@ class Lobby : RenderableScene
         // 씬이 처음이면 생성
         if (!Player.Created)
         {
-            player = new GameObject("Player", new CharSpriteCoords(5, 68)); // 원래 16
+            player = new GameObject("Player", new CharSpriteCoords(5, 16)); // 원래 16
             AddGameObject(player);
             player.AddComponent<CharSpriteRenderer>();
             player.AddComponent<Player>();  // 여기에 DontDestroyOnLoadScene으로 보내는 스크립트가 있다
@@ -159,8 +159,8 @@ class Lobby : RenderableScene
 
     public override void Exit()
     {
-        //// 배경음악
-        //SoundManager.Instance.PauseTrack("LobbyMusic");
+        // 배경음악
+        SoundManager.Instance.PauseTrack("To Ponder");
 
         // 플레이어의 로비 전용 스크립트 제거
         if (player != null)

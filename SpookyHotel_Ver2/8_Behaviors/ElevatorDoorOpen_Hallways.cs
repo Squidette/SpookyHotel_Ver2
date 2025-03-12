@@ -25,4 +25,13 @@
             doorOpenSprite.enabled = e.open;
         }
     }
+
+    // 여닫힐 때 사운드
+    protected override void OnReservedStateChanged(object? sender, Elevator.ElevatorDoorOpenEventArgs e)
+    {
+        if (GameManager.Instance.playerCurrentFloor == Elevator.Instance.CurrentFloor)
+        {
+            SoundManager.Instance.PlaySnippet(e.open ? "voice_opendoor.mp3" : "voice_closedoor.mp3");
+        }
+    }
 }

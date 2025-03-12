@@ -8,11 +8,11 @@
     {
         base.Start();
 
-        //// 사운드
-        //if (!SoundManager.Instance.ResumeTrack("HallwaysMusic"))
-        //{
-        //    SoundManager.Instance.PlayTrack("Cemetry Gates.mp3", "HallwaysMusic");
-        //}
+        // 사운드
+        if (!SoundManager.Instance.ResumeTrack("To Ponder"))
+        {
+            SoundManager.Instance.PlayTrack("to_ponder.mp3", "To Ponder");
+        }
 
         // 리소스 로드
         ConsoleRenderer.Instance.LoadSprite("hallBase", new CharSpriteSize(10, 120), new CharSpriteCoords(), "halls.txt", false);
@@ -108,26 +108,23 @@
         }
 
         /// 남은 방 UI
+        if (GameManager.Instance.RoomsLeftToClean > 0)
         {
             GameObject ui = new GameObject("RoomsLeftToClean", new CharSpriteCoords(8, 23));
             AddGameObject(ui);
             CharSpriteRenderer cr = ui.AddComponent<CharSpriteRenderer>();
             cr.CharSpriteKey = "roomsLeftToClean";
             cr.enabled = GameManager.Instance.EnteredRoom;
-            ui.AddComponent<RoomsLeftToCleanUI>().renderer = cr;
             ui.ParentObject = Find("Camera");
-        }
-
-        // 치워야하는 방 수 업데이트
-        if (GameManager.Instance.EnteredRoom)
-        {
-            GameManager.Instance.CountUpCleanRooms();
+            RoomsLeftToCleanUI uiScript = ui.AddComponent<RoomsLeftToCleanUI>();
+            uiScript.renderer = cr;
+            uiScript.UpdateNumber();
         }
     }
 
     public override void Exit()
     {
-        //SoundManager.Instance.PauseTrack("HallwaysMusic");
+        SoundManager.Instance.PauseTrack("To Ponder");
 
         // 플레이어의 복도 전용 스크립트 제거
         if (player != null)

@@ -10,30 +10,38 @@ class LobbyPlayer : Behavior
     {
         base.FixedUpdate();
 
-        // 호텔 프론트맨에게 말하기
+        /// 호텔 프론트맨에게 말하기
         if (gameObject.Transform.position.row >= 37 && gameObject.Transform.position.row <= 49)
         {
-            // 처음 말을 건다면, 게임 스토리 설명
-            if (!GameManager.Instance.talkedToFrontMan)
+            // 치울 방이 남아 있다면
+            if (GameManager.Instance.RoomsLeftToClean > 0)
             {
-                if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
+                // 처음 말을 건다면, 게임 스토리 설명
+                if (!GameManager.Instance.talkedToFrontMan)
                 {
-                    SceneManager.Instance.LoadScene<HotelFrontManDialogue>();
-                    GameManager.Instance.talkedToFrontMan = true;
+                    if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
+                    {
+                        SceneManager.Instance.LoadScene<HotelFrontManDialogue>();
+                        GameManager.Instance.talkedToFrontMan = true;
+                    }
+                }
+                // 두 번째 이상 말을 건다면, 코멘트 정도만
+                else
+                {
+                    if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
+                    {
+                        SceneManager.Instance.LoadScene<HotelFrontManComments>();
+                    }
                 }
             }
-            // 두 번째 이상 말을 건다면, 코멘트 정도만
-            else
+            // 방을 다 치우고 말을 건다면
+            else if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
             {
-                if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
-                {
-                    SceneManager.Instance.LoadScene<HotelFrontManComments>();
-                }
+                SceneManager.Instance.LoadScene<HotelFrontManFinal>();
             }
         }
-
-        // 엘리베이터 입장하기
-        if (gameObject.Transform.position.row >= 66 && gameObject.Transform.position.row <= 74)
+        /// 엘리베이터 입장하기
+        else if (gameObject.Transform.position.row >= 66 && gameObject.Transform.position.row <= 74)
         {
             if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
             {
@@ -43,7 +51,7 @@ class LobbyPlayer : Behavior
                     //// 처음 입장이 아니라면 그냥 입장
                     //if (GameManager.Instance.calledElevator)
                     //{
-                        SceneManager.Instance.LoadScene<ElevatorInside>();
+                    SceneManager.Instance.LoadScene<ElevatorInside>();
                     //}
                     //// 처음 입장이라면 튜토리얼부터 켜기
                     //else
@@ -60,10 +68,13 @@ class LobbyPlayer : Behavior
                 }
             }
         }
+        else if (gameObject.Transform.position.row <= 3)
+        {
+            // 방을 다 치우고 나간다면 해피 엔딩 
+            if (GameManager.Instance.RoomsLeftToClean <= 0)
+            {
+                SceneManager.Instance.LoadScene<Ending1>();
+            }
+        }
     }
-
-    //public override void OnDestroy()
-    //{
-    //    base.OnDestroy();
-    //}
 }

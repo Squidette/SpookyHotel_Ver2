@@ -64,12 +64,28 @@
         // 스페이스 누르면 나가기
         if (InputManager.Instance.GetKey_Timed(ConsoleKey.Spacebar))
         {
-            SceneManager.Instance.LoadScene<Hallways>();
+            // 치워야하는 방 수 업데이트
+            if (GameManager.Instance.EnteredRoom)
+            {
+                GameManager.Instance.CountUpCleanRooms();
+            }
+
+            // 처음으로 다 치웠다면 대사 재생
+            if (GameManager.Instance.RoomsLeftToClean == 0 && !CleanDone.shown)
+            {
+                SceneManager.Instance.LoadScene<CleanDone>();
+            }
+            else // 아니면 그냥 나가기
+            {
+                SceneManager.Instance.LoadScene<Hallways>();
+            }
         }
     }
 
-    //public override void Exit()
-    //{
-    //    base.Exit();
-    //}
+    public override void Exit()
+    {
+
+
+        base.Exit();
+    }
 }
