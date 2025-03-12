@@ -160,7 +160,7 @@ class Lobby : RenderableScene
     public override void Exit()
     {
         // 배경음악
-        SoundManager.Instance.PauseTrack("To Ponder");
+        //SoundManager.Instance.PauseTrack("To Ponder");
 
         // 플레이어의 로비 전용 스크립트 제거
         if (player != null)

@@ -8,6 +8,8 @@
     {
         base.Start();
 
+        SoundManager.Instance.PauseTrack("To Ponder");
+
         // 배경음악
         if (!SoundManager.Instance.ResumeTrack("ElevMusic"))
         {

@@ -124,7 +124,7 @@
 
     public override void Exit()
     {
-        SoundManager.Instance.PauseTrack("To Ponder");
+        //SoundManager.Instance.PauseTrack("To Ponder");
 
         // 플레이어의 복도 전용 스크립트 제거
         if (player != null)
