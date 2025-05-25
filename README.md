@@ -1,7 +1,6 @@
 # C# 콘솔게임 프로젝트: The Spooky Hotel Ver.2
 <br>
 개인 프로젝트로, 유니티 사용 경험을 참고하여 C#에서 핵심 매니저, 씬, 오브젝트, 컴포넌트 클래스들이 존재하는 단순한 형태의 게임 엔진을 만들어보기 위한 노력<br>
-버전 2인 이유는 이전 버전을 c++로 만들었기 때문<br>
 
 플레이 영상: https://www.youtube.com/watch?v=7zs_OMVn0jo<br><br>
 
